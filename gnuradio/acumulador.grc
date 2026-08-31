@@ -22,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: Practica 2
+    title: acumulador
     window_size: (1000,1000)
   states:
     bus_sink: false
@@ -37,7 +37,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '256000'
+    value: '260000'
   states:
     bus_sink: false
     bus_source: false
@@ -63,7 +63,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 276.0]
+    coordinate: [504, 268.0]
     rotation: 0
     state: enabled
 - name: blocks_vector_source_x_0
@@ -128,7 +128,7 @@ blocks:
     alpha9: '1.0'
     autoscale: 'False'
     axislabels: 'True'
-    color1: blue
+    color1: red
     color10: dark blue
     color2: red
     color3: green
@@ -143,9 +143,9 @@ blocks:
     entags: 'True'
     grid: 'False'
     gui_hint: ''
-    label1: Salida
+    label1: Entrada
     label10: Signal 10
-    label2: Signal 2
+    label2: Salida
     label3: Signal 3
     label4: Signal 4
     label5: Signal 5
@@ -164,9 +164,9 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '"Salida"'
+    name: '""'
     nconnections: '1'
-    size: '200'
+    size: '600'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'
@@ -205,7 +205,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [728, 260.0]
+    coordinate: [792, 236.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0
@@ -261,9 +261,9 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: '"Entrada"'
+    name: '"Acumulador"'
     nconnections: '1'
-    size: '200'
+    size: '600'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'
@@ -302,7 +302,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [480, 116.0]
+    coordinate: [504, 108.0]
     rotation: 0
     state: enabled
 

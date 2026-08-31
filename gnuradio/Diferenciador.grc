@@ -338,9 +338,9 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: "\"Gr\xE1ficas\""
+    name: "\"Se\xF1al Cuadrada\""
     nconnections: '2'
-    size: '1024'
+    size: '64'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'
@@ -435,7 +435,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: "\"Gr\xE1ficas\""
+    name: "\"Se\xF1al Rampa\""
     nconnections: '2'
     size: '64'
     srate: samp_rate
@@ -532,7 +532,7 @@ blocks:
     marker7: '-1'
     marker8: '-1'
     marker9: '-1'
-    name: "\"Gr\xE1ficas\""
+    name: "\"Se\xF1al Constante\""
     nconnections: '2'
     size: '1024'
     srate: samp_rate

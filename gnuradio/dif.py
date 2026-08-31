@@ -74,7 +74,7 @@ class dif(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0_1_0_1 = qtgui.time_sink_f(
             1024, #size
             samp_rate, #samp_rate
-            "Gráficas", #name
+            "Señal Constante", #name
             2, #number of inputs
             None # parent
         )
@@ -122,7 +122,7 @@ class dif(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0_1_0_0 = qtgui.time_sink_f(
             64, #size
             samp_rate, #samp_rate
-            "Gráficas", #name
+            "Señal Rampa", #name
             2, #number of inputs
             None # parent
         )
@@ -168,9 +168,9 @@ class dif(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_1_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_1_0_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_time_sink_x_0_1_0_0_win)
         self.qtgui_time_sink_x_0_1_0 = qtgui.time_sink_f(
-            1024, #size
+            64, #size
             samp_rate, #samp_rate
-            "Gráficas", #name
+            "Señal Cuadrada", #name
             2, #number of inputs
             None # parent
         )
