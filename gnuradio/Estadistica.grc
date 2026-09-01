@@ -33,11 +33,32 @@ options:
     state: enabled
 
 blocks:
+- name: ruido
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.1'
+    stop: '0.6'
+    value: '0'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 664.0]
+    rotation: 0
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: '10000'
   states:
     bus_sink: false
     bus_source: false
@@ -54,7 +75,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [320, 12.0]
+    coordinate: [224, 372.0]
     rotation: 0
     state: enabled
 - name: analog_noise_source_x_0
@@ -75,13 +96,13 @@ blocks:
     bus_structure: null
     coordinate: [8, 260.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: analog_noise_source_x_0_0
   id: analog_noise_source_x
   parameters:
     affinity: ''
     alias: ''
-    amp: '0'
+    amp: ruido
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -92,7 +113,30 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 716.0]
+    coordinate: [48, 668.0]
+    rotation: 0
+    state: enabled
+- name: analog_sig_source_x_0
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: ''
+    freq: '100'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    showports: 'False'
+    type: float
+    waveform: analog.GR_SIN_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 392.0]
     rotation: 0
     state: enabled
 - name: blocks_add_xx_0
@@ -112,7 +156,7 @@ blocks:
     bus_structure: null
     coordinate: [336, 160.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_add_xx_0_0
   id: blocks_add_xx
   parameters:
@@ -128,7 +172,25 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [352, 632.0]
+    coordinate: [480, 536.0]
+    rotation: 0
+    state: enabled
+- name: blocks_head_0
+  id: blocks_head
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: '10'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [280, 464.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -151,7 +213,7 @@ blocks:
     bus_structure: null
     coordinate: [608, 220.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_vector_source_x_0
   id: blocks_vector_source_x
   parameters:
@@ -171,7 +233,7 @@ blocks:
     bus_structure: null
     coordinate: [72, 128.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_vector_source_x_0_1_0
   id: blocks_vector_source_x
   parameters:
@@ -189,9 +251,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 580.0]
+    coordinate: [48, 564.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: epy_block_0
   id: epy_block
   parameters:
@@ -227,7 +289,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [472, 744.0]
+    coordinate: [664, 568.0]
     rotation: 0
     state: enabled
 - name: epy_block_0_0_0_0
@@ -255,10 +317,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [424, 320.0]
+    coordinate: [424, 288.0]
     rotation: 0
-    state: enabled
-- name: qtgui_number_sink_0_0
+    state: disabled
+- name: qtgui_number_sink_0_3_0_0
   id: qtgui_number_sink
   parameters:
     affinity: ''
@@ -267,10 +329,10 @@ blocks:
     avg: '0'
     color1: ("black", "black")
     color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
+    color2: ("blue", "red")
+    color3: ("black", "white")
+    color4: ("white", "black")
+    color5: ("black", "red")
     color6: ("black", "black")
     color7: ("black", "black")
     color8: ("black", "black")
@@ -288,20 +350,20 @@ blocks:
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_HORIZ
     gui_hint: ''
-    label1: ''
+    label1: Media
     label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
+    label2: "Media Cuadr\xE1rica"
+    label3: RMS
+    label4: Promedio Tiempo
+    label5: "Desviaci\xF3n Est\xE1ndar"
     label6: ''
     label7: ''
     label8: ''
     label9: ''
     max: '1'
     min: '-1'
-    name: "Media Cuadr\xE1tica"
-    nconnections: '1'
+    name: "Estadistica_se\xF1al"
+    nconnections: '5'
     type: float
     unit1: ''
     unit10: ''
@@ -318,259 +380,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [712, 544.0]
-    rotation: 0
-    state: enabled
-- name: qtgui_number_sink_0_1_0
-  id: qtgui_number_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    autoscale: 'False'
-    avg: '0'
-    color1: ("black", "black")
-    color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
-    color6: ("black", "black")
-    color7: ("black", "black")
-    color8: ("black", "black")
-    color9: ("black", "black")
-    comment: ''
-    factor1: '1'
-    factor10: '1'
-    factor2: '1'
-    factor3: '1'
-    factor4: '1'
-    factor5: '1'
-    factor6: '1'
-    factor7: '1'
-    factor8: '1'
-    factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_HORIZ
-    gui_hint: ''
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    max: '1'
-    min: '-1'
-    name: Promedio Tiempo
-    nconnections: '1'
-    type: float
-    unit1: ''
-    unit10: ''
-    unit2: ''
-    unit3: ''
-    unit4: ''
-    unit5: ''
-    unit6: ''
-    unit7: ''
-    unit8: ''
-    unit9: ''
-    update_time: '0.10'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [688, 784.0]
-    rotation: 0
-    state: enabled
-- name: qtgui_number_sink_0_2_0
-  id: qtgui_number_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    autoscale: 'False'
-    avg: '0'
-    color1: ("black", "black")
-    color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
-    color6: ("black", "black")
-    color7: ("black", "black")
-    color8: ("black", "black")
-    color9: ("black", "black")
-    comment: ''
-    factor1: '1'
-    factor10: '1'
-    factor2: '1'
-    factor3: '1'
-    factor4: '1'
-    factor5: '1'
-    factor6: '1'
-    factor7: '1'
-    factor8: '1'
-    factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_HORIZ
-    gui_hint: ''
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    max: '1'
-    min: '-1'
-    name: "Desviaci\xF3n Est\xE1ndar"
-    nconnections: '1'
-    type: float
-    unit1: ''
-    unit10: ''
-    unit2: ''
-    unit3: ''
-    unit4: ''
-    unit5: ''
-    unit6: ''
-    unit7: ''
-    unit8: ''
-    unit9: ''
-    update_time: '0.10'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [688, 904.0]
-    rotation: 0
-    state: enabled
-- name: qtgui_number_sink_0_3_0
-  id: qtgui_number_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    autoscale: 'False'
-    avg: '0'
-    color1: ("black", "black")
-    color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
-    color6: ("black", "black")
-    color7: ("black", "black")
-    color8: ("black", "black")
-    color9: ("black", "black")
-    comment: ''
-    factor1: '1'
-    factor10: '1'
-    factor2: '1'
-    factor3: '1'
-    factor4: '1'
-    factor5: '1'
-    factor6: '1'
-    factor7: '1'
-    factor8: '1'
-    factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_HORIZ
-    gui_hint: ''
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    max: '1'
-    min: '-1'
-    name: Media
-    nconnections: '1'
-    type: float
-    unit1: ''
-    unit10: ''
-    unit2: ''
-    unit3: ''
-    unit4: ''
-    unit5: ''
-    unit6: ''
-    unit7: ''
-    unit8: ''
-    unit9: ''
-    update_time: '0.10'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [680, 424.0]
-    rotation: 0
-    state: enabled
-- name: qtgui_number_sink_0_4_0
-  id: qtgui_number_sink
-  parameters:
-    affinity: ''
-    alias: ''
-    autoscale: 'False'
-    avg: '0'
-    color1: ("black", "black")
-    color10: ("black", "black")
-    color2: ("black", "black")
-    color3: ("black", "black")
-    color4: ("black", "black")
-    color5: ("black", "black")
-    color6: ("black", "black")
-    color7: ("black", "black")
-    color8: ("black", "black")
-    color9: ("black", "black")
-    comment: ''
-    factor1: '1'
-    factor10: '1'
-    factor2: '1'
-    factor3: '1'
-    factor4: '1'
-    factor5: '1'
-    factor6: '1'
-    factor7: '1'
-    factor8: '1'
-    factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_HORIZ
-    gui_hint: ''
-    label1: ''
-    label10: ''
-    label2: ''
-    label3: ''
-    label4: ''
-    label5: ''
-    label6: ''
-    label7: ''
-    label8: ''
-    label9: ''
-    max: '1'
-    min: '-1'
-    name: RMS
-    nconnections: '1'
-    type: float
-    unit1: ''
-    unit10: ''
-    unit2: ''
-    unit3: ''
-    unit4: ''
-    unit5: ''
-    unit6: ''
-    unit7: ''
-    unit8: ''
-    unit9: ''
-    update_time: '0.10'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [696, 664.0]
+    coordinate: [848, 568.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -669,7 +479,7 @@ blocks:
     bus_structure: null
     coordinate: [776, 108.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0_0
   id: qtgui_time_sink_x
   parameters:
@@ -766,7 +576,7 @@ blocks:
     bus_structure: null
     coordinate: [480, 100.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_time_sink_x_0_2_0
   id: qtgui_time_sink_x
   parameters:
@@ -861,25 +671,27 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [456, 452.0]
+    coordinate: [696, 436.0]
     rotation: 0
     state: enabled
 
 connections:
 - [analog_noise_source_x_0, '0', blocks_add_xx_0, '1']
 - [analog_noise_source_x_0_0, '0', blocks_add_xx_0_0, '1']
+- [analog_sig_source_x_0, '0', blocks_head_0, '0']
 - [blocks_add_xx_0, '0', epy_block_0_0_0_0, '0']
 - [blocks_add_xx_0, '0', qtgui_time_sink_x_0_0, '0']
 - [blocks_add_xx_0_0, '0', epy_block_0, '0']
 - [blocks_add_xx_0_0, '0', qtgui_time_sink_x_0_2_0, '0']
+- [blocks_head_0, '0', blocks_add_xx_0_0, '0']
 - [blocks_throttle2_0, '0', qtgui_time_sink_x_0, '0']
 - [blocks_vector_source_x_0, '0', blocks_add_xx_0, '0']
 - [blocks_vector_source_x_0_1_0, '0', blocks_add_xx_0_0, '0']
-- [epy_block_0, '0', qtgui_number_sink_0_3_0, '0']
-- [epy_block_0, '1', qtgui_number_sink_0_0, '0']
-- [epy_block_0, '2', qtgui_number_sink_0_4_0, '0']
-- [epy_block_0, '3', qtgui_number_sink_0_1_0, '0']
-- [epy_block_0, '4', qtgui_number_sink_0_2_0, '0']
+- [epy_block_0, '0', qtgui_number_sink_0_3_0_0, '0']
+- [epy_block_0, '1', qtgui_number_sink_0_3_0_0, '1']
+- [epy_block_0, '2', qtgui_number_sink_0_3_0_0, '2']
+- [epy_block_0, '3', qtgui_number_sink_0_3_0_0, '3']
+- [epy_block_0, '4', qtgui_number_sink_0_3_0_0, '4']
 - [epy_block_0_0_0_0, '0', blocks_throttle2_0, '0']
 
 metadata:
