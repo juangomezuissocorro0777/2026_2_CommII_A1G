@@ -64,6 +64,7 @@ class Práctica_1(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
+        self.vector = vector = (1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1)
         self.samp_rate = samp_rate = 32000
 
         ##################################################
@@ -381,8 +382,8 @@ class Práctica_1(gr.top_block, Qt.QWidget):
         self.top_layout.addWidget(self._qtgui_number_sink_0_0_win)
         self.epy_block_0_0_0_0 = epy_block_0_0_0_0.blk()
         self.epy_block_0 = epy_block_0.blk()
-        self.blocks_vector_source_x_0_1_0 = blocks.vector_source_f((1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1), True, 1, [])
-        self.blocks_vector_source_x_0 = blocks.vector_source_f((1, 1,1, 1, 1, 1,1, 1, 1, 1,1, 1, 1, 1,1, 1, 1, 1,1, 1, 1, 1,1, 1, 1, 1, -1, -1,-1, -1, -1, -1,-1, -1, -1, -1,-1, -1, -1, -1,-1, -1, -1, -1,-1, -1, -1, -1,-1, -1, -1, -1), True, 1, [])
+        self.blocks_vector_source_x_0_1_0 = blocks.vector_source_f(vector, True, 1, [])
+        self.blocks_vector_source_x_0 = blocks.vector_source_f(vector, True, 1, [])
         self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_float*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
         self.blocks_add_xx_0_0 = blocks.add_vff(1)
         self.blocks_add_xx_0 = blocks.add_vff(1)
@@ -417,6 +418,14 @@ class Práctica_1(gr.top_block, Qt.QWidget):
         self.wait()
 
         event.accept()
+
+    def get_vector(self):
+        return self.vector
+
+    def set_vector(self, vector):
+        self.vector = vector
+        self.blocks_vector_source_x_0.set_data(self.vector, [])
+        self.blocks_vector_source_x_0_1_0.set_data(self.vector, [])
 
     def get_samp_rate(self):
         return self.samp_rate

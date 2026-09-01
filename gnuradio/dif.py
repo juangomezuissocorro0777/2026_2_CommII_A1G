@@ -5,8 +5,7 @@
 # SPDX-License-Identifier: GPL-3.0
 #
 # GNU Radio Python Flow Graph
-# Title: Lab 1 Comu2
-# Author: Jeferson Uribe
+# Title: diferenciador
 # GNU Radio version: 3.10.12.0
 
 from PyQt5 import Qt
@@ -32,9 +31,9 @@ import threading
 class dif(gr.top_block, Qt.QWidget):
 
     def __init__(self):
-        gr.top_block.__init__(self, "Lab 1 Comu2", catch_exceptions=True)
+        gr.top_block.__init__(self, "diferenciador", catch_exceptions=True)
         Qt.QWidget.__init__(self)
-        self.setWindowTitle("Lab 1 Comu2")
+        self.setWindowTitle("diferenciador")
         qtgui.util.check_set_qss()
         try:
             self.setWindowIcon(Qt.QIcon.fromTheme('gnuradio-grc'))
