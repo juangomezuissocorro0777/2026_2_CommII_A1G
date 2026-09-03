@@ -73,7 +73,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: np.array([1])
+    value: np.array([1,1,1,1,1,1,1,1])
   states:
     bus_sink: false
     bus_source: false
@@ -160,7 +160,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [792, 258]
+    coordinate: [880, 204.0]
     rotation: 0
     state: true
 - name: analog_random_source_x_0
@@ -182,7 +182,7 @@ blocks:
     bus_structure: null
     coordinate: [9, 147]
     rotation: 0
-    state: true
+    state: disabled
 - name: blocks_add_xx_0
   id: blocks_add_xx
   parameters:
@@ -215,7 +215,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [152, 176.0]
+    coordinate: [192, 176.0]
     rotation: 0
     state: true
 - name: blocks_complex_to_mag_squared_0
@@ -234,6 +234,28 @@ blocks:
     coordinate: [528, 632.0]
     rotation: 0
     state: true
+- name: blocks_file_source_0
+  id: blocks_file_source
+  parameters:
+    affinity: ''
+    alias: ''
+    begin_tag: pmt.PMT_NIL
+    comment: ''
+    file: C:\Users\ASUS\OneDrive\Documentos\GitHub\2026_2_CommII_A1G\gnuradio\sonido.wav
+    length: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    repeat: 'True'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 304.0]
+    rotation: 0
+    state: enabled
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
   parameters:
@@ -284,7 +306,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [168, 458]
+    coordinate: [232, 464.0]
     rotation: 0
     state: true
 - name: blocks_stream_to_vector_0
@@ -324,6 +346,22 @@ blocks:
     coordinate: [944, 136.0]
     rotation: 0
     state: true
+- name: blocks_unpack_k_bits_bb_0
+  id: blocks_unpack_k_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    k: '8'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 344.0]
+    rotation: 0
+    state: enabled
 - name: epy_block_0
   id: epy_block
   parameters:
@@ -495,7 +533,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [176, 724.0]
+    coordinate: [240, 740.0]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -669,6 +707,19 @@ blocks:
     coordinate: [1056, 576.0]
     rotation: 0
     state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: p_audio
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [824, 344.0]
+    rotation: 0
+    state: enabled
 - name: virtual_sink_0_1
   id: virtual_sink
   parameters:
@@ -679,7 +730,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [296.0, 256]
+    coordinate: [344.0, 264]
     rotation: 270
     state: true
 - name: virtual_sink_0_1_0
@@ -705,7 +756,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1000.0, 312]
+    coordinate: [1040.0, 312]
     rotation: 270
     state: enabled
 - name: virtual_source_0
@@ -734,6 +785,19 @@ blocks:
     coordinate: [18, 453]
     rotation: 0
     state: true
+- name: virtual_source_1
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: p_audio
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 280.0]
+    rotation: 0
+    state: enabled
 
 connections:
 - [analog_const_source_x_0_0, '0', blocks_add_xx_0, '0']
@@ -743,10 +807,12 @@ connections:
 - [blocks_char_to_float_0, '0', blocks_add_xx_0, '1']
 - [blocks_char_to_float_0, '0', virtual_sink_0_1, '0']
 - [blocks_complex_to_mag_squared_0, '0', epy_block_0, '0']
+- [blocks_file_source_0, '0', blocks_unpack_k_bits_bb_0, '0']
 - [blocks_multiply_const_vxx_0, '0', interp_fir_filter_xxx_0, '0']
 - [blocks_multiply_const_vxx_1, '0', qtgui_vector_sink_f_0, '0']
 - [blocks_stream_to_vector_0, '0', fft_vxx_0, '0']
 - [blocks_throttle_0, '0', virtual_sink_0_1_0, '0']
+- [blocks_unpack_k_bits_bb_0, '0', virtual_sink_0, '0']
 - [epy_block_0, '0', blocks_multiply_const_vxx_1, '0']
 - [fft_vxx_0, '0', blocks_complex_to_mag_squared_0, '0']
 - [interp_fir_filter_xxx_0, '0', blocks_throttle_0, '0']
@@ -754,6 +820,7 @@ connections:
 - [virtual_source_0, '0', qtgui_freq_sink_x_0, '0']
 - [virtual_source_0, '0', qtgui_time_sink_x_0, '0']
 - [virtual_source_0_0, '0', blocks_null_sink_0, '0']
+- [virtual_source_1, '0', blocks_char_to_float_0, '0']
 
 metadata:
   file_format: 1
