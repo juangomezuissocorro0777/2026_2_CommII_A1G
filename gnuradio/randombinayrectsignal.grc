@@ -49,7 +49,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: samp_rate/Sps
   states:
     bus_sink: false
     bus_source: false
@@ -73,7 +73,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: np.array([1,1,1,1,1,1,1,1])
+    value: np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
   states:
     bus_sink: false
     bus_source: false
@@ -85,7 +85,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: Rb*Sps
+    value: '256000'
   states:
     bus_sink: false
     bus_source: false
@@ -241,7 +241,7 @@ blocks:
     alias: ''
     begin_tag: pmt.PMT_NIL
     comment: ''
-    file: C:\Users\ASUS\OneDrive\Documentos\GitHub\2026_2_CommII_A1G\gnuradio\sonido.wav
+    file: C:\Users\ASUS\OneDrive\Documentos\GitHub\2026_2_CommII_A1G\gnuradio\rana.jpg
     length: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -309,6 +309,23 @@ blocks:
     coordinate: [232, 464.0]
     rotation: 0
     state: true
+- name: blocks_null_sink_0_0
+  id: blocks_null_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    bus_structure_sink: '[[0,],]'
+    comment: ''
+    num_inputs: '1'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [248, 296.0]
+    rotation: 0
+    state: disabled
 - name: blocks_stream_to_vector_0
   id: blocks_stream_to_vector
   parameters:
@@ -764,7 +781,7 @@ blocks:
   parameters:
     alias: ''
     comment: ''
-    stream_id: p4
+    stream_id: p5
   states:
     bus_sink: false
     bus_source: false
@@ -777,7 +794,7 @@ blocks:
   parameters:
     alias: ''
     comment: ''
-    stream_id: p5
+    stream_id: p4
   states:
     bus_sink: false
     bus_source: false
@@ -821,6 +838,7 @@ connections:
 - [virtual_source_0, '0', qtgui_time_sink_x_0, '0']
 - [virtual_source_0_0, '0', blocks_null_sink_0, '0']
 - [virtual_source_1, '0', blocks_char_to_float_0, '0']
+- [virtual_source_1, '0', blocks_null_sink_0_0, '0']
 
 metadata:
   file_format: 1
