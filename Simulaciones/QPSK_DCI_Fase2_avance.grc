@@ -48,7 +48,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 470]
+    coordinate: [16, 444.0]
     rotation: 0
     state: enabled
 - name: EsN0_dB
@@ -62,7 +62,7 @@ blocks:
     rangeType: float
     start: '-5'
     step: '0.5'
-    stop: '30'
+    stop: '80'
     value: '10'
     widget: counter_slider
   states:
@@ -134,7 +134,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 470]
+    coordinate: [216, 460.0]
     rotation: 0
     state: enabled
 - name: Sps
@@ -211,7 +211,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 260]
+    coordinate: [544, 272.0]
     rotation: 0
     state: enabled
 - name: interf_freq
@@ -232,7 +232,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [192, 380]
+    coordinate: [384, 304.0]
     rotation: 0
     state: enabled
 - name: mt
@@ -244,7 +244,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 348.0]
+    coordinate: [848, 316.0]
     rotation: 0
     state: enabled
 - name: noise_amp
@@ -260,7 +260,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 380]
+    coordinate: [136, 284.0]
     rotation: 0
     state: enabled
 - name: ntaps
@@ -455,7 +455,7 @@ blocks:
     bus_structure: null
     coordinate: [2480, 900]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_delay_0
   id: blocks_delay
   parameters:
@@ -495,7 +495,7 @@ blocks:
     bus_structure: null
     coordinate: [576, 960]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_keep_one_in_n_0
   id: blocks_keep_one_in_n
   parameters:
@@ -511,7 +511,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1768, 816.0]
+    coordinate: [1760, 808.0]
     rotation: 0
     state: enabled
 - name: blocks_moving_average_xx_0
@@ -533,7 +533,7 @@ blocks:
     bus_structure: null
     coordinate: [2640, 880]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_pack_k_bits_bb_0
   id: blocks_pack_k_bits_bb
   parameters:
@@ -584,7 +584,7 @@ blocks:
     bus_structure: null
     coordinate: [2320, 900]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_vector_source_x_1
   id: blocks_vector_source_x
   parameters:
@@ -621,7 +621,7 @@ blocks:
     bus_structure: null
     coordinate: [2180, 900]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: digital_chunks_to_symbols_xx_0
   id: digital_chunks_to_symbols_xx
   parameters:
@@ -655,9 +655,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1992, 760.0]
+    coordinate: [1968, 792.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: fir_filter_xxx_0
   id: fir_filter_xxx
   parameters:
@@ -687,7 +687,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1408, 8]
+    coordinate: [696, 8.0]
     rotation: 0
     state: enabled
 - name: interp_fir_filter_xxx_0
@@ -894,7 +894,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1528, 652.0]
+    coordinate: [1816, 556.0]
     rotation: 0
     state: enabled
 - name: qtgui_freq_sink_x_0
@@ -1040,7 +1040,7 @@ blocks:
     bus_structure: null
     coordinate: [2848, 872.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_number_sink_1
   id: qtgui_number_sink
   parameters:
@@ -1231,7 +1231,6 @@ connections:
 - [analog_sig_source_x_0, '0', blocks_add_xx_0, '2']
 - [analog_sig_source_x_0, '0', qtgui_freq_sink_x_0, '2']
 - [blocks_add_xx_0, '0', fir_filter_xxx_0, '0']
-- [blocks_add_xx_0, '0', qtgui_eye_sink_x_0, '0']
 - [blocks_add_xx_0, '0', qtgui_freq_sink_x_0, '3']
 - [blocks_add_xx_0, '0', qtgui_time_sink_x_0, '1']
 - [blocks_char_to_float_0, '0', blocks_moving_average_xx_0, '0']
@@ -1250,6 +1249,7 @@ connections:
 - [digital_chunks_to_symbols_xx_0, '0', qtgui_const_sink_x_0, '0']
 - [digital_constellation_decoder_cb_0, '0', blocks_xor_xx_0, '0']
 - [fir_filter_xxx_0, '0', blocks_delay_0, '0']
+- [fir_filter_xxx_0, '0', qtgui_eye_sink_x_0, '0']
 - [interp_fir_filter_xxx_0, '0', throttle_0, '0']
 - [throttle_0, '0', blocks_add_xx_0, '0']
 - [throttle_0, '0', qtgui_freq_sink_x_0, '0']
