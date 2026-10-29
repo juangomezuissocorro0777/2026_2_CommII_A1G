@@ -14,7 +14,6 @@ from gnuradio import qtgui
 from PyQt5 import QtCore
 from gnuradio import analog
 from gnuradio import blocks
-import numpy
 from gnuradio import digital
 from gnuradio import filter
 from gnuradio.filter import firdes
@@ -276,12 +275,12 @@ class Guia2_BASE_Constelaciones_RRC_Tx_Canal(gr.top_block, Qt.QWidget):
         self._qtgui_const_sink_x_0_win = sip.wrapinstance(self.qtgui_const_sink_x_0.qwidget(), Qt.QWidget)
         self.top_layout.addWidget(self._qtgui_const_sink_x_0_win)
         self.digital_chunks_to_symbols_xx_0 = digital.chunks_to_symbols_bc(tabla_de_verdad_constelacion, 1)
+        self.blocks_vector_source_x_0 = blocks.vector_source_b((0, 0, 0), True, 1, [])
         self.blocks_add_xx_0 = blocks.add_vcc(1)
         self.bits_to_symbols = blocks.repack_bits_bb(1, bps, "", False, gr.GR_MSB_FIRST)
         self._beta_range = qtgui.Range(0.10, 1.0, 0.05, 0.35, 200)
         self._beta_win = qtgui.RangeWidget(self._beta_range, self.set_beta, "Roll-off beta", "counter_slider", float, QtCore.Qt.Horizontal)
         self.top_layout.addWidget(self._beta_win)
-        self.analog_random_source_x_0 = blocks.vector_source_b(list(map(int, numpy.random.randint(0, 2, 1000))), True)
         self.analog_noise_source_x_0 = analog.noise_source_c(analog.GR_GAUSSIAN, noise_amp, 0)
 
 
@@ -289,12 +288,12 @@ class Guia2_BASE_Constelaciones_RRC_Tx_Canal(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.analog_noise_source_x_0, 0), (self.blocks_add_xx_0, 1))
-        self.connect((self.analog_random_source_x_0, 0), (self.bits_to_symbols, 0))
         self.connect((self.bits_to_symbols, 0), (self.digital_chunks_to_symbols_xx_0, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.qtgui_const_sink_x_0, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.qtgui_eye_sink_x_0, 0))
         self.connect((self.blocks_add_xx_0, 0), (self.qtgui_freq_sink_x_0, 1))
         self.connect((self.blocks_add_xx_0, 0), (self.qtgui_time_sink_x_0, 0))
+        self.connect((self.blocks_vector_source_x_0, 0), (self.bits_to_symbols, 0))
         self.connect((self.digital_chunks_to_symbols_xx_0, 0), (self.rrc_tx, 0))
         self.connect((self.rrc_tx, 0), (self.throttle_0, 0))
         self.connect((self.throttle_0, 0), (self.blocks_add_xx_0, 0))
