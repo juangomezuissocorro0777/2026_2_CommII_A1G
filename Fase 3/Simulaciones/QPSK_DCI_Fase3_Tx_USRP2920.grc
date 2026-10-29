@@ -1,0 +1,1093 @@
+options:
+  parameters:
+    author: Grupo A1-GG
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: Solo transmision. Vector Source con mensaje conocido, QPSK (1, j, -1, -j), RRC de energia unitaria, adaptacion de tasa a 250 kS/s y osmocom Sink (UHD) a 910 MHz. Sin canal simulado ni receptor.
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: QPSK_DCI_Fase3_Tx_USRP2920
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Fase 3 - Transmisor QPSK (DCI) con USRP-2920 a 910 MHz
+    window_size: (1400,900)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1800
+    - 8
+    rotation: 0
+    state: enabled
+blocks:
+- name: M
+  id: variable
+  parameters:
+    comment: ''
+    value: len(tabla_de_verdad_constelacion)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 8
+    - 96
+    rotation: 0
+    state: enabled
+- name: Rb
+  id: variable
+  parameters:
+    comment: ''
+    value: Rs*bps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 472
+    - 96
+    rotation: 0
+    state: enabled
+- name: Rs
+  id: variable
+  parameters:
+    comment: ''
+    value: '16000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 184
+    - 96
+    rotation: 0
+    state: enabled
+- name: Sps
+  id: variable
+  parameters:
+    comment: ''
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 272
+    - 96
+    rotation: 0
+    state: enabled
+- name: bps
+  id: variable
+  parameters:
+    comment: ''
+    value: int(math.log(M,2))
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 96
+    - 96
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: Rs*Sps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 360
+    - 96
+    rotation: 0
+    state: enabled
+- name: span
+  id: variable
+  parameters:
+    comment: ''
+    value: '11'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 560
+    - 96
+    rotation: 0
+    state: enabled
+- name: tabla_de_verdad_constelacion
+  id: variable
+  parameters:
+    comment: ''
+    value: (1+0j, 0+1j, -1+0j, 0-1j)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 480
+    - 168
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import math
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 760
+    - 168
+    rotation: 0
+    state: enabled
+- name: ntaps
+  id: variable
+  parameters:
+    value: span*Sps+1
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 8
+    - 168
+    rotation: 0
+    state: enabled
+- name: rrc_raw
+  id: variable
+  parameters:
+    value: firdes.root_raised_cosine(1.0, samp_rate, Rs, beta, ntaps)
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 96
+    - 168
+    rotation: 0
+    state: enabled
+- name: rrc_taps
+  id: variable
+  parameters:
+    value: '[t/math.sqrt(sum([x*x for x in rrc_raw])) for t in rrc_raw]'
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 288
+    - 168
+    rotation: 0
+    state: enabled
+- name: mensaje
+  id: variable
+  parameters:
+    value: '"UIS - Comunicaciones II - Grupo A1-GG - Enlace QPSK DCI. "'
+    comment: Mensaje conocido (solo ASCII)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 8
+    - 240
+    rotation: 0
+    state: enabled
+- name: fuente_mensaje
+  id: blocks_vector_source_x
+  parameters:
+    alias: ''
+    affinity: ''
+    minoutbuf: '0'
+    maxoutbuf: '0'
+    type: byte
+    vector: list(mensaje.encode("ascii"))
+    tags: '[]'
+    repeat: 'True'
+    vlen: '1'
+    comment: 'Vector Source: mensaje conocido'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 8
+    - 380
+    rotation: 0
+    state: enabled
+- name: bits_to_symbols
+  id: blocks_repack_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    align_output: 'False'
+    comment: 8 bits por byte -> simbolos de bps bits (MSB primero)
+    endianness: gr.GR_MSB_FIRST
+    k: '8'
+    l: bps
+    len_tag_key: '""'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 200
+    - 388
+    rotation: 0
+    state: enabled
+- name: digital_chunks_to_symbols_xx_0
+  id: digital_chunks_to_symbols_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    dimension: '1'
+    in_type: byte
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_ports: '1'
+    out_type: complex
+    symbol_table: tabla_de_verdad_constelacion
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 420
+    - 388
+    rotation: 0
+    state: true
+- name: rrc_tx
+  id: interp_fir_filter_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    interp: Sps
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_delay: '0'
+    taps: rrc_taps
+    type: ccf
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 620
+    - 380
+    rotation: 0
+    state: true
+- name: qtgui_const_sink_x_0
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: 3,2,1,1
+    label1: '"Simbolos"'
+    label10: '""'
+    label2: '""'
+    label3: '""'
+    label4: '""'
+    label5: '""'
+    label6: '""'
+    label7: '""'
+    label8: '""'
+    label9: '""'
+    legend: 'False'
+    marker1: '0'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: '"Simbolos QPSK transmitidos"'
+    nconnections: '1'
+    size: '2048'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '1.5'
+    xmin: '-1.5'
+    ymax: '1.5'
+    ymin: '-1.5'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 620
+    - 520
+    rotation: 0
+    state: true
+- name: qtgui_freq_sink_x_0
+  id: qtgui_freq_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    average: '1.0'
+    axislabels: 'True'
+    bw: samp_rate_usrp
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    ctrlpanel: 'False'
+    fc: fc
+    fftsize: '1024'
+    freqhalf: 'True'
+    grid: 'True'
+    gui_hint: 2,0,1,3
+    label: Relative Gain
+    label1: '"Senal enviada a la USRP"'
+    label10: ''
+    label2: Salida del canal + AWGN
+    label3: '"Salida filtro acoplado"'
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"Espectro de la senal transmitida (centrado en fc)"'
+    nconnections: '1'
+    norm_window: 'False'
+    showports: 'False'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_tag: '""'
+    type: complex
+    units: dB
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    wintype: window.WIN_BLACKMAN_hARRIS
+    ymax: '10'
+    ymin: '-120'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1280
+    - 580
+    rotation: 0
+    state: true
+- name: qtgui_time_sink_x_0
+  id: qtgui_time_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: blue
+    color10: dark blue
+    color2: red
+    color3: green
+    color4: black
+    color5: cyan
+    color6: magenta
+    color7: yellow
+    color8: dark red
+    color9: dark green
+    comment: ''
+    ctrlpanel: 'False'
+    entags: 'True'
+    grid: 'True'
+    gui_hint: 3,0,1,2
+    label1: I
+    label10: Signal 10
+    label2: Q
+    label3: Signal 3
+    label4: Signal 4
+    label5: Signal 5
+    label6: Signal 6
+    label7: Signal 7
+    label8: Signal 8
+    label9: Signal 9
+    legend: 'True'
+    marker1: '-1'
+    marker10: '-1'
+    marker2: '-1'
+    marker3: '-1'
+    marker4: '-1'
+    marker5: '-1'
+    marker6: '-1'
+    marker7: '-1'
+    marker8: '-1'
+    marker9: '-1'
+    name: '"Envolvente compleja enviada a la USRP"'
+    nconnections: '1'
+    size: '1024'
+    srate: samp_rate_usrp
+    stemplot: 'False'
+    style1: '1'
+    style10: '1'
+    style2: '1'
+    style3: '1'
+    style4: '1'
+    style5: '1'
+    style6: '1'
+    style7: '1'
+    style8: '1'
+    style9: '1'
+    tr_chan: '0'
+    tr_delay: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    ylabel: Amplitude
+    ymax: '1'
+    ymin: '-1'
+    yunit: '""'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1280
+    - 680
+    rotation: 0
+    state: true
+- name: lbl_mensaje_tx
+  id: variable_qtgui_label
+  parameters:
+    label: '"Mensaje transmitido"'
+    type: string
+    value: mensaje
+    formatter: None
+    gui_hint: 0,0,1,3
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1360
+    - 8
+    rotation: 0
+    state: enabled
+- name: beta
+  id: variable
+  parameters:
+    value: '0.35'
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 648
+    - 96
+    rotation: 0
+    state: enabled
+- name: samp_rate_usrp
+  id: variable
+  parameters:
+    value: 250e3
+    comment: '100 MHz / 400: tasa entera admitida por la USRP-2920'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 200
+    - 240
+    rotation: 0
+    state: enabled
+- name: interp_usrp
+  id: variable
+  parameters:
+    value: int(samp_rate_usrp/math.gcd(int(samp_rate_usrp),int(samp_rate)))
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 440
+    - 240
+    rotation: 0
+    state: enabled
+- name: decim_usrp
+  id: variable
+  parameters:
+    value: int(samp_rate/math.gcd(int(samp_rate_usrp),int(samp_rate)))
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 560
+    - 240
+    rotation: 0
+    state: enabled
+- name: adaptacion_tasa
+  id: rational_resampler_xxx
+  parameters:
+    alias: ''
+    affinity: ''
+    minoutbuf: '0'
+    maxoutbuf: '0'
+    type: ccc
+    interp: interp_usrp
+    decim: decim_usrp
+    taps: '[]'
+    fbw: '0.4'
+    comment: 128 kS/s -> 250 kS/s (125/64). Rs = 16 kBd no cambia
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 820
+    - 372
+    rotation: 0
+    state: enabled
+- name: fc
+  id: variable
+  parameters:
+    value: 910e6
+    comment: Banda ISM 902-928 MHz
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 680
+    - 240
+    rotation: 0
+    state: enabled
+- name: usrp_args
+  id: variable
+  parameters:
+    value: '"uhd,addr=192.168.10.2"'
+    comment: IP de fabrica de la USRP-2920; cambiar si el laboratorio usa otra
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 880
+    - 240
+    rotation: 0
+    state: enabled
+- name: ganancia_tx
+  id: variable_qtgui_range
+  parameters:
+    label: '"Ganancia Tx [dB]"'
+    rangeType: float
+    value: '10'
+    start: '0'
+    stop: '31'
+    step: '0.5'
+    widget: counter_slider
+    orient: QtCore.Qt.Horizontal
+    min_len: '200'
+    gui_hint: 1,0,1,1
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 880
+    - 8
+    rotation: 0
+    state: enabled
+- name: amp_tx
+  id: variable_qtgui_range
+  parameters:
+    label: '"Amplitud digital"'
+    rangeType: float
+    value: '1.0'
+    start: '0'
+    stop: '1.8'
+    step: '0.05'
+    widget: counter_slider
+    orient: QtCore.Qt.Horizontal
+    min_len: '200'
+    gui_hint: 1,1,1,1
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1040
+    - 8
+    rotation: 0
+    state: enabled
+- name: lbl_fc
+  id: variable_qtgui_label
+  parameters:
+    label: '"Portadora [MHz]"'
+    type: real
+    value: fc/1e6
+    formatter: None
+    gui_hint: 1,2,1,1
+    comment: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1200
+    - 8
+    rotation: 0
+    state: enabled
+- name: escala_tx
+  id: blocks_multiply_const_vxx
+  parameters:
+    alias: ''
+    affinity: ''
+    minoutbuf: '0'
+    maxoutbuf: '0'
+    type: complex
+    const: amp_tx
+    vlen: '1'
+    comment: 'Pico RRC = 0.54: con amp_tx <= 1.8 no satura el DAC'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1010
+    - 396
+    rotation: 0
+    state: enabled
+- name: usrp_2920_tx
+  id: osmosdr_sink
+  parameters:
+    alias: ''
+    affinity: ''
+    minoutbuf: '0'
+    maxoutbuf: '0'
+    type: fc32
+    args: usrp_args
+    sync: ''
+    num_mboards: '1'
+    clock_source0: ''
+    time_source0: ''
+    clock_source1: ''
+    time_source1: ''
+    clock_source2: ''
+    time_source2: ''
+    clock_source3: ''
+    time_source3: ''
+    clock_source4: ''
+    time_source4: ''
+    clock_source5: ''
+    time_source5: ''
+    clock_source6: ''
+    time_source6: ''
+    clock_source7: ''
+    time_source7: ''
+    nchan: '1'
+    sample_rate: samp_rate_usrp
+    freq0: fc
+    corr0: '0'
+    gain0: ganancia_tx
+    if_gain0: '20'
+    bb_gain0: '20'
+    ant0: '"TX/RX"'
+    bw0: '0'
+    freq1: 100e6
+    corr1: '0'
+    gain1: '10'
+    if_gain1: '20'
+    bb_gain1: '20'
+    ant1: ''
+    bw1: '0'
+    freq2: 100e6
+    corr2: '0'
+    gain2: '10'
+    if_gain2: '20'
+    bb_gain2: '20'
+    ant2: ''
+    bw2: '0'
+    freq3: 100e6
+    corr3: '0'
+    gain3: '10'
+    if_gain3: '20'
+    bb_gain3: '20'
+    ant3: ''
+    bw3: '0'
+    freq4: 100e6
+    corr4: '0'
+    gain4: '10'
+    if_gain4: '20'
+    bb_gain4: '20'
+    ant4: ''
+    bw4: '0'
+    freq5: 100e6
+    corr5: '0'
+    gain5: '10'
+    if_gain5: '20'
+    bb_gain5: '20'
+    ant5: ''
+    bw5: '0'
+    freq6: 100e6
+    corr6: '0'
+    gain6: '10'
+    if_gain6: '20'
+    bb_gain6: '20'
+    ant6: ''
+    bw6: '0'
+    freq7: 100e6
+    corr7: '0'
+    gain7: '10'
+    if_gain7: '20'
+    bb_gain7: '20'
+    ant7: ''
+    bw7: '0'
+    freq8: 100e6
+    corr8: '0'
+    gain8: '10'
+    if_gain8: '20'
+    bb_gain8: '20'
+    ant8: ''
+    bw8: '0'
+    freq9: 100e6
+    corr9: '0'
+    gain9: '10'
+    if_gain9: '20'
+    bb_gain9: '20'
+    ant9: ''
+    bw9: '0'
+    freq10: 100e6
+    corr10: '0'
+    gain10: '10'
+    if_gain10: '20'
+    bb_gain10: '20'
+    ant10: ''
+    bw10: '0'
+    freq11: 100e6
+    corr11: '0'
+    gain11: '10'
+    if_gain11: '20'
+    bb_gain11: '20'
+    ant11: ''
+    bw11: '0'
+    freq12: 100e6
+    corr12: '0'
+    gain12: '10'
+    if_gain12: '20'
+    bb_gain12: '20'
+    ant12: ''
+    bw12: '0'
+    freq13: 100e6
+    corr13: '0'
+    gain13: '10'
+    if_gain13: '20'
+    bb_gain13: '20'
+    ant13: ''
+    bw13: '0'
+    freq14: 100e6
+    corr14: '0'
+    gain14: '10'
+    if_gain14: '20'
+    bb_gain14: '20'
+    ant14: ''
+    bw14: '0'
+    freq15: 100e6
+    corr15: '0'
+    gain15: '10'
+    if_gain15: '20'
+    bb_gain15: '20'
+    ant15: ''
+    bw15: '0'
+    freq16: 100e6
+    corr16: '0'
+    gain16: '10'
+    if_gain16: '20'
+    bb_gain16: '20'
+    ant16: ''
+    bw16: '0'
+    freq17: 100e6
+    corr17: '0'
+    gain17: '10'
+    if_gain17: '20'
+    bb_gain17: '20'
+    ant17: ''
+    bw17: '0'
+    freq18: 100e6
+    corr18: '0'
+    gain18: '10'
+    if_gain18: '20'
+    bb_gain18: '20'
+    ant18: ''
+    bw18: '0'
+    freq19: 100e6
+    corr19: '0'
+    gain19: '10'
+    if_gain19: '20'
+    bb_gain19: '20'
+    ant19: ''
+    bw19: '0'
+    freq20: 100e6
+    corr20: '0'
+    gain20: '10'
+    if_gain20: '20'
+    bb_gain20: '20'
+    ant20: ''
+    bw20: '0'
+    freq21: 100e6
+    corr21: '0'
+    gain21: '10'
+    if_gain21: '20'
+    bb_gain21: '20'
+    ant21: ''
+    bw21: '0'
+    freq22: 100e6
+    corr22: '0'
+    gain22: '10'
+    if_gain22: '20'
+    bb_gain22: '20'
+    ant22: ''
+    bw22: '0'
+    freq23: 100e6
+    corr23: '0'
+    gain23: '10'
+    if_gain23: '20'
+    bb_gain23: '20'
+    ant23: ''
+    bw23: '0'
+    freq24: 100e6
+    corr24: '0'
+    gain24: '10'
+    if_gain24: '20'
+    bb_gain24: '20'
+    ant24: ''
+    bw24: '0'
+    freq25: 100e6
+    corr25: '0'
+    gain25: '10'
+    if_gain25: '20'
+    bb_gain25: '20'
+    ant25: ''
+    bw25: '0'
+    freq26: 100e6
+    corr26: '0'
+    gain26: '10'
+    if_gain26: '20'
+    bb_gain26: '20'
+    ant26: ''
+    bw26: '0'
+    freq27: 100e6
+    corr27: '0'
+    gain27: '10'
+    if_gain27: '20'
+    bb_gain27: '20'
+    ant27: ''
+    bw27: '0'
+    freq28: 100e6
+    corr28: '0'
+    gain28: '10'
+    if_gain28: '20'
+    bb_gain28: '20'
+    ant28: ''
+    bw28: '0'
+    freq29: 100e6
+    corr29: '0'
+    gain29: '10'
+    if_gain29: '20'
+    bb_gain29: '20'
+    ant29: ''
+    bw29: '0'
+    freq30: 100e6
+    corr30: '0'
+    gain30: '10'
+    if_gain30: '20'
+    bb_gain30: '20'
+    ant30: ''
+    bw30: '0'
+    freq31: 100e6
+    corr31: '0'
+    gain31: '10'
+    if_gain31: '20'
+    bb_gain31: '20'
+    ant31: ''
+    bw31: '0'
+    comment: USRP-2920 via UHD. Antena TX/RX. La ganancia RF va de 0 a 31 dB
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 1280
+    - 340
+    rotation: 0
+    state: enabled
+connections:
+- - fuente_mensaje
+  - '0'
+  - bits_to_symbols
+  - '0'
+- - bits_to_symbols
+  - '0'
+  - digital_chunks_to_symbols_xx_0
+  - '0'
+- - digital_chunks_to_symbols_xx_0
+  - '0'
+  - rrc_tx
+  - '0'
+- - digital_chunks_to_symbols_xx_0
+  - '0'
+  - qtgui_const_sink_x_0
+  - '0'
+- - rrc_tx
+  - '0'
+  - adaptacion_tasa
+  - '0'
+- - adaptacion_tasa
+  - '0'
+  - escala_tx
+  - '0'
+- - escala_tx
+  - '0'
+  - usrp_2920_tx
+  - '0'
+- - escala_tx
+  - '0'
+  - qtgui_freq_sink_x_0
+  - '0'
+- - escala_tx
+  - '0'
+  - qtgui_time_sink_x_0
+  - '0'
+metadata:
+  file_format: 1
+  grc_version: 3.10.12.0
